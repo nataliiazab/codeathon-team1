@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState, useCallback, useEffect } from "react";
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 import {
   FaFacebookF,

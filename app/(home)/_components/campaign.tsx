@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import Link from "next/link";
 import { Campaign, Category } from "@prisma/client";
-import ReactHtmlParser from 'react-html-parser'
+import parse from "html-react-parser";
 
 
 type CampaignWithProgressWithCategory = Campaign & {
