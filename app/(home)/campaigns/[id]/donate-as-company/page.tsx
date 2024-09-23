@@ -19,10 +19,9 @@ export default function DonateAsCompany() {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (agreed) {
-        // Redirect to PayPal
         window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
           isRecurring ? "RECURRING" : "ONCE"
-        }`; // Replace with actual PayPal donation URL
+        }`; 
       } else {
         alert("You must agree to the disclaimer.");
       }

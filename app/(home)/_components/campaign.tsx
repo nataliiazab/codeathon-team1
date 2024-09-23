@@ -38,9 +38,7 @@ const CampaignCard = ({
   id,
   title,
   description,
-  imageUrl,
-  fund,
-  category,
+  imageUrl
 }: CampaignCardProps) => {
   const truncatedBody =
     description.length > 300 ? `${description.slice(0, 300)}...` : description;

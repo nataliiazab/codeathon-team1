@@ -29,9 +29,6 @@ const Footer = () => {
     <footer className='bg-[#059669] text-white py-10'>
       <div className='max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center'>
         <div className='flex flex-col items-center md:items-start mb-6 md:mb-0'>
-          {/* <p className='text-center md:text-left'>
-            Your trusted partner in making a difference.
-          </p> */}
         </div>
         <div className='flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 mb-6 md:mb-0'>
           {navigationLinks.map((item, idx) => (

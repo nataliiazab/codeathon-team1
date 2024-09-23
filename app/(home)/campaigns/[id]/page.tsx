@@ -15,10 +15,10 @@ import { TbBrandX } from "react-icons/tb";
 
 interface Campaign {
   id: string;
-  name: string;
+  title: string; 
   description: string;
-  image: string;
-  category: string;
+  imageUrl: string; 
+  category: { name: string }; 
 }
 
 export default function CampaignDetails() {
@@ -26,12 +26,20 @@ export default function CampaignDetails() {
   const router = useRouter();
   const [isReadMore, setIsReadMore] = useState(false);
   const [donationType, setDonationType] = useState<string | null>(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Campaign | null>(null);
 
   useEffect(() => {
-    fetch(`/api/campaigns/${id}`)
-      .then((res) => res.json())
-      .then(setData);
+    const fetchCampaignData = async () => {
+      const response = await fetch(`/api/campaigns/${id}`);
+      if (!response.ok) {
+        console.error("Failed to fetch campaign data");
+        return;
+      }
+      const campaignData = await response.json();
+      setData(campaignData);
+    };
+
+    fetchCampaignData();
   }, [id]);
 
   const campaign = useMemo(() => data, [data]);
@@ -93,9 +101,7 @@ export default function CampaignDetails() {
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
             ? parse(campaign?.description)
-            : parse(
-                `${campaign?.description.toString().slice(0, 200)}...`
-              )}
+            : parse(`${campaign?.description.toString().slice(0, 200)}...`)}
           <button
             onClick={toggleReadMore}
             className="text-blue-500 hover:underline ml-1"

@@ -7,7 +7,7 @@ const About: React.FC = () => {
           <img
             src="https://images.squarespace-cdn.com/content/v1/5e53da2e922842434f3d7d88/1605192011248-JOC4WFHFT3U5CVF7S2UR/2020+BIG+logo+transparent.png?format=1000w"
             alt="Our Company Logo"
-            className="w-48 h-auto md:w-64" // Responsive width for better scaling
+            className="w-48 h-auto md:w-64" 
             aria-label="Our Company Logo"
           />
         </div>

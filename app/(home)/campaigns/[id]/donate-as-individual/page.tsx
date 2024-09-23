@@ -10,17 +10,15 @@ export default function DonateAsIndividual() {
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const router = useRouter();
   const campaignName = searchParams.get("campaignName") || "";
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (agreed) {
-        // Redirect to PayPal
         window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
           isRecurring ? "RECURRING" : "ONCE"
-        }`; // Replace with actual PayPal donation URL
+        }`; 
       } else {
         alert("You must agree to the disclaimer.");
       }
