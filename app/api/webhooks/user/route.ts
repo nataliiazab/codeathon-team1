@@ -1,58 +1,13 @@
-// import { db } from "@/lib/db";
-// import { clerkClient } from "@clerk/nextjs/server";
-// import { IncomingHttpHeaders } from "http";
-// import { headers } from "next/headers";
-// import { NextResponse } from "next/server";
-// import { Webhook, WebhookRequiredHeaders } from "svix";
+import { NextApiRequest, NextApiResponse } from "next";
 
-// const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || "";
-
-// async function handler(request: Request) {
-//   const payload = await request.json();
-//   const headersList = headers();
-//   const heads = {
-//     "svix-id": headersList.get("svix-id"),
-//     "svix-timestamp": headersList.get("svix-timestamp"),
-//     "svix-signature": headersList.get("svix-signature"),
-//   };
-//   const wh = new Webhook(webhookSecret);
-//   let evt: Event | null = null;
-
-//   try {
-//     evt = wh.verify(
-//       JSON.stringify(payload),
-//       heads as IncomingHttpHeaders & WebhookRequiredHeaders
-//     ) as Event;
-//   } catch (err) {
-//     console.error((err as Error).message);
-//     return NextResponse.json({}, { status: 400 });
-//   }
-
-//   const eventType: EventType = evt.type;
-//   if (eventType === "user.created" || eventType === "user.updated") {
-//     const { id, ...attributes } = evt.data;
-
-//     const users = await db.user.upsert({
-//       where: { externalId: id as string },
-//       create: {
-//         externalId: id as string,
-//         attributes,
-//       },
-//       update: { attributes },
-//     });
-
-//     return NextResponse.json(users);
-//   }
-// }
-
-// type EventType = "user.created" | "user.updated" | "*";
-
-// type Event = {
-//   data: Record<string, string | number>;
-//   object: "event";
-//   type: EventType;
-// };
-
-// export const GET = handler;
-// export const POST = handler;
-// export const PUT = handler;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === "POST") {
+    res.status(200).json({ message: "User webhook received" });
+  } else {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
