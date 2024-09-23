@@ -28,8 +28,8 @@ import {
 import { useRouter } from "next/navigation";
 
 interface InviteMemberProps {
-  email: string | undefined;
-  role: OrganizationCustomRoleKey | undefined;
+  email?: string; 
+  role?: OrganizationCustomRoleKey; 
 }
 
 const formSchema = z.object({
@@ -163,4 +163,9 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
   );
 };
 
-export default InviteMember;
+// Export the InviteMember component as default
+const Page = () => {
+  return <InviteMember />;
+};
+
+export default Page;
