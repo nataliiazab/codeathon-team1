@@ -6,12 +6,21 @@ import Link from "next/link";
 import { Campaign, Category } from "@prisma/client";
 import parse from "html-react-parser";
 
-
 type CampaignWithProgressWithCategory = Campaign & {
   category: Category | null;
   campaigns: { id: string }[];
   progress: number | null;
 };
+
+// Define a type for the API response
+interface CampaignApiResponse {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  fund: number;
+  category: { name: string };
+}
 
 interface CampaignsListProps {
   items: CampaignWithProgressWithCategory[];
@@ -25,7 +34,7 @@ interface CampaignCardProps {
   fund: number;
   progress: number | null;
   category: string;
-};
+}
 
 const CampaignCard = ({
   id,
@@ -35,7 +44,8 @@ const CampaignCard = ({
   fund,
   category,
 }: CampaignCardProps) => {
-  const truncatedBody = description.length > 300 ? `${description.slice(0, 300)}...` : description;
+  const truncatedBody =
+    description.length > 300 ? `${description.slice(0, 300)}...` : description;
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
@@ -59,38 +69,35 @@ const CampaignCard = ({
   );
 };
 
-const Campaigns = ({
-  items
- }:CampaignsListProps) => {
-
+const Campaigns = ({ items }: CampaignsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 3; // Adjust this number as needed
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<CampaignApiResponse[] | null>(null); // Specify type here
 
   useEffect(() => {
-    fetch('/api/campaigns')
-      .then(res => res.json())
+    fetch("/api/campaigns")
+      .then((res) => res.json())
       .then(setData);
   }, []);
 
-
   const uniqueCategories = Array.from(
-    new Set(data&&data.map((campaign) => campaign.category.name))
+    new Set(data?.map((campaign) => campaign.category.name))
   );
 
-  const filteredCampaigns = data&&data.filter((campaign) => {
+  const filteredCampaigns = data?.filter((campaign) => {
     const matchesSearch = campaign.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesCategory = category === "" || campaign.category.name === category;
+    const matchesCategory =
+      category === "" || campaign.category.name === category;
     return matchesSearch && matchesCategory;
   });
 
   const totalPages = Math.ceil(filteredCampaigns?.length / campaignsPerPage);
-  const currentCampaigns = filteredCampaigns&&filteredCampaigns.slice(
+  const currentCampaigns = filteredCampaigns?.slice(
     (currentPage - 1) * campaignsPerPage,
     currentPage * campaignsPerPage
   );
@@ -145,7 +152,7 @@ const Campaigns = ({
           </select>
         </div>
 
-        {currentCampaigns&&currentCampaigns.length > 0 ? (
+        {currentCampaigns && currentCampaigns.length > 0 ? (
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {currentCampaigns.map((campaign) => (
