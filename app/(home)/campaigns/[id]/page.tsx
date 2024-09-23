@@ -33,11 +33,11 @@ const CampaignDetails: React.FC = () => {
     "individual" | "company" | null
   >(null);
   const [data, setData] = useState<Campaign | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // Step 1: Add loading state
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCampaignData = async () => {
-      setLoading(true); // Step 2: Set loading to true before fetching
+      setLoading(true); 
       try {
         const response = await fetch(`/api/campaigns/${id}`);
         if (!response.ok) {
@@ -48,7 +48,7 @@ const CampaignDetails: React.FC = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); // Step 3: Set loading to false after fetching
+        setLoading(false); 
       }
     };
 

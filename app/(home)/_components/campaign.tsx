@@ -164,7 +164,6 @@ const Campaigns = ({ items }: CampaignsListProps) => {
           <div className="text-center mt-10">
             <p className="text-gray-600">Loading campaigns...</p>
             <div className="loader"></div>{" "}
-            {/* You can replace this with a spinner or a loading animation */}
           </div>
         ) : currentCampaigns && currentCampaigns.length > 0 ? (
           <div>
