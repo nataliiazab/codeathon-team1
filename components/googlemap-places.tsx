@@ -44,7 +44,6 @@ export const GooglemapPlaces = () => {
   };
 
   const formData = (data) => {
-    console.log(data)
     const addressComponents = data?.address_components;
 
     const componentMap = {

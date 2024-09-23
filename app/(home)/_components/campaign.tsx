@@ -75,7 +75,7 @@ const Campaigns = ({
       .then(res => res.json())
       .then(setData);
   }, []);
-  console.log(data)
+
 
   const uniqueCategories = Array.from(
     new Set(data&&data.map((campaign) => campaign.category.name))

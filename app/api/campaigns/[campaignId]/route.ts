@@ -31,7 +31,6 @@ export async function DELETE(
 ) {
   try {
       const { userId } = auth();
-      console.log(auth())
       if(!userId) {
         return new NextResponse("Unauthorized", { status: 401 });
       }
@@ -68,20 +67,11 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const {isPublished, ...values} = await req.json();
-    console.log("data", values)
   
     if(!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const campaign = await db.campaign.update({
-      where: {
-        id: params.campaignId,
-      },
-      data: {
-        ...values,
-      }
-    });
 
     return new NextResponse
   } catch (error) {
