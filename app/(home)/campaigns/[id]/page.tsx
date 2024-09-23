@@ -92,8 +92,8 @@ export default function CampaignDetails() {
         />
         <p className="mt-4 text-gray-800 leading-relaxed">
           {isReadMore
-            ? ReactHtmlParser(campaign?.description)
-            : ReactHtmlParser(
+            ? parse(campaign?.description)
+            : parse(
                 `${campaign?.description.toString().slice(0, 200)}...`
               )}
           <button

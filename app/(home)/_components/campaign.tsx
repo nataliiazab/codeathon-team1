@@ -46,7 +46,7 @@ const CampaignCard = ({
       />
       <div className="p-4 flex flex-col">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-        <p className="text-gray-700 text-sm flex-1">{ReactHtmlParser(truncatedBody)}</p>
+        <p className="text-gray-700 text-sm flex-1">{parse(truncatedBody)}</p>
       </div>
       <div className="p-4 border-t border-gray-200 text-center">
         <Link href={`/campaigns/${id}`}>
