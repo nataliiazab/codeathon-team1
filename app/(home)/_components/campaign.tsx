@@ -74,13 +74,24 @@ const Campaigns = ({ items }: CampaignsListProps) => {
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 3; // Adjust this number as needed
-
-  const [data, setData] = useState<CampaignApiResponse[] | null>(null); // Specify type here
+  const [data, setData] = useState<CampaignApiResponse[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    fetch("/api/campaigns")
-      .then((res) => res.json())
-      .then(setData);
+    const fetchCampaigns = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/campaigns");
+        const campaigns = await response.json();
+        setData(campaigns);
+      } catch (error) {
+        console.error("Error fetching campaigns:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCampaigns();
   }, []);
 
   const uniqueCategories = Array.from(
@@ -152,7 +163,13 @@ const Campaigns = ({ items }: CampaignsListProps) => {
           </select>
         </div>
 
-        {currentCampaigns && currentCampaigns.length > 0 ? (
+        {isLoading ? (
+          <div className="text-center mt-10">
+            <p className="text-gray-600">Loading campaigns...</p>
+            <div className="loader"></div>{" "}
+            {/* You can replace this with a spinner or a loading animation */}
+          </div>
+        ) : currentCampaigns && currentCampaigns.length > 0 ? (
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {currentCampaigns.map((campaign) => (
