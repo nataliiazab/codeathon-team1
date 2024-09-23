@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 
 interface InviteMemberProps {
   email: string | undefined;
-  role: OrganizationCustomRoleKey | undefined[];
+  role: OrganizationCustomRoleKey | undefined;
 }
 
 const formSchema = z.object({
@@ -41,7 +41,6 @@ const formSchema = z.object({
   role: z.string({ required_error: "Please select a role to display." }),
 });
 
-// Form to invite a new member to the organization.
 const InviteMember = ({ email, role }: InviteMemberProps) => {
   const { orgRole } = useAuth();
   const { isLoaded, organization } = useOrganization({
@@ -63,8 +62,8 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: " ",
-      role: " ",
+      email: email || "",
+      role: role || "",
     },
   });
 
