@@ -9,7 +9,6 @@ import parse from "html-react-parser";
 type CampaignWithProgressWithCategory = Campaign & {
   category: Category | null;
   campaigns: { id: string }[];
-  progress: number | null;
 };
 
 // Define a type for the API response
@@ -32,7 +31,6 @@ interface CampaignCardProps {
   description: string;
   imageUrl?: string;
   fund: number;
-  progress: number | null;
   category: string;
 }
 
@@ -73,7 +71,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const campaignsPerPage = 3; 
+  const campaignsPerPage = 3;
   const [data, setData] = useState<CampaignApiResponse[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -106,9 +104,9 @@ const Campaigns = ({ items }: CampaignsListProps) => {
       const matchesCategory =
         category === "" || campaign.category.name === category;
       return matchesSearch && matchesCategory;
-    }) || []; 
+    }) || [];
 
-  const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage); 
+  const totalPages = Math.ceil(filteredCampaigns.length / campaignsPerPage);
   const currentCampaigns = filteredCampaigns.slice(
     (currentPage - 1) * campaignsPerPage,
     currentPage * campaignsPerPage
