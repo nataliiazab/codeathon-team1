@@ -25,6 +25,12 @@ interface Campaign {
   category: Category;
 }
 
+const Spinner: React.FC = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-[#37AB87] border-solid"></div>
+  </div>
+);
+
 const CampaignDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -37,7 +43,7 @@ const CampaignDetails: React.FC = () => {
 
   useEffect(() => {
     const fetchCampaignData = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const response = await fetch(`/api/campaigns/${id}`);
         if (!response.ok) {
@@ -48,7 +54,7 @@ const CampaignDetails: React.FC = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -82,17 +88,18 @@ const CampaignDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2 text-center">
+      <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg border border-slate-100 text-center">
         <h1 className="text-2xl font-semibold text-gray-800">
           Loading campaign details...
         </h1>
+        <Spinner />
       </div>
-    ); // Loading state
+    );
   }
 
   if (!data) {
     return (
-      <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2">
+      <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg border border-slate-100">
         <h1 className="text-2xl font-semibold text-gray-800">
           Campaign Not Found
         </h1>
@@ -101,7 +108,7 @@ const CampaignDetails: React.FC = () => {
   }
 
   return (
-    <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md border-solid border-slate-100 border-2">
+    <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg border border-slate-100">
       <header className="flex flex-col items-start mb-6">
         <h1 className="text-4xl font-extrabold text-gray-900">
           {campaign.title}
@@ -121,7 +128,7 @@ const CampaignDetails: React.FC = () => {
             : parse(`${campaign.description.slice(0, 200)}...`)}
           <button
             onClick={toggleReadMore}
-            className="text-blue-500 hover:underline ml-1"
+            className="text-blue-500 hover:underline ml-1 transition-colors duration-200"
           >
             {isReadMore ? "Read Less" : "Read More"}
           </button>
@@ -129,7 +136,7 @@ const CampaignDetails: React.FC = () => {
       </section>
 
       <section className="mt-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-4">
           <p className="text-xl font-semibold text-gray-900">
             Share this campaign:
           </p>
@@ -179,7 +186,7 @@ const CampaignDetails: React.FC = () => {
               type="button"
               onClick={handleCopyLink}
               aria-label="Copy Link"
-              className="text-[#37AB87] hover:text-[#2e8c6c] text-xl"
+              className="text-[#37AB87] hover:text-[#2e8c6c] text-xl transition-colors duration-200"
             >
               <FiLink />
             </button>
@@ -205,7 +212,7 @@ const CampaignDetails: React.FC = () => {
                 onChange={() =>
                   setDonationType(type as "individual" | "company")
                 }
-                className="h-5 w-5 text-blue-500 border-gray-300 rounded"
+                className="h-5 w-5 text-[#37AB87] border-gray-300 rounded focus:ring-[#37AB87] transition-colors duration-200"
                 aria-checked={donationType === type ? "true" : "false"}
               />
               <span className="text-gray-800 text-lg">
@@ -218,7 +225,7 @@ const CampaignDetails: React.FC = () => {
           <button
             type="button"
             onClick={handleDonateNow}
-            className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full"
+            className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-36 mx-auto rounded-full transition-all duration-200"
           >
             Donate Now
           </button>
@@ -239,28 +246,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({ platform, url, icon }) => (
     href={url}
     target="_blank"
     rel="noopener noreferrer"
+    className="flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors duration-200"
     aria-label={`Share on ${platform}`}
-    className={`text-[#${
-      platform === "X"
-        ? "1DA1F2"
-        : platform === "Facebook"
-        ? "4267B2"
-        : platform === "LinkedIn"
-        ? "0077B5"
-        : platform === "WhatsApp"
-        ? "25D366"
-        : "EA4335"
-    }] hover:text-[#${
-      platform === "X"
-        ? "1a8cd8"
-        : platform === "Facebook"
-        ? "3b5998"
-        : platform === "LinkedIn"
-        ? "006699"
-        : platform === "WhatsApp"
-        ? "1aa74d"
-        : "d8291b"
-    }] text-xl`}
   >
     {icon}
   </a>

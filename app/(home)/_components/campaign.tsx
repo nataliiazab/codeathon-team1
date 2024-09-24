@@ -5,6 +5,7 @@ import { Button } from "../../../components/ui/button";
 import Link from "next/link";
 import { Campaign, Category } from "@prisma/client";
 import parse from "html-react-parser";
+import Spinner from "./spinner";
 
 type CampaignWithProgressWithCategory = Campaign & {
   category: Category | null;
@@ -37,13 +38,13 @@ const CampaignCard = ({
   id,
   title,
   description,
-  imageUrl
+  imageUrl,
 }: CampaignCardProps) => {
   const truncatedBody =
     description.length > 300 ? `${description.slice(0, 300)}...` : description;
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
       <img
         src={imageUrl}
         alt={title}
@@ -63,6 +64,8 @@ const CampaignCard = ({
     </div>
   );
 };
+
+
 
 const Campaigns = ({ items }: CampaignsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -160,10 +163,7 @@ const Campaigns = ({ items }: CampaignsListProps) => {
         </div>
 
         {isLoading ? (
-          <div className="text-center mt-10">
-            <p className="text-gray-600">Loading campaigns...</p>
-            <div className="loader"></div>{" "}
-          </div>
+          <Spinner />
         ) : currentCampaigns && currentCampaigns.length > 0 ? (
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

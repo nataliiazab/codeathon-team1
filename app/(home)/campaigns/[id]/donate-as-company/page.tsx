@@ -21,7 +21,7 @@ export default function DonateAsCompany() {
       if (agreed) {
         window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
           isRecurring ? "RECURRING" : "ONCE"
-        }`; 
+        }`;
       } else {
         alert("You must agree to the disclaimer.");
       }
@@ -59,7 +59,7 @@ export default function DonateAsCompany() {
             onChange={(e) => {
               const value = e.target.value;
               setCompanyName(value);
-              if (value !== "Other") setNewCompanyName(""); 
+              if (value !== "Other") setNewCompanyName("");
             }}
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
           >
