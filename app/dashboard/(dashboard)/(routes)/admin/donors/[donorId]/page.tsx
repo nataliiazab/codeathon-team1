@@ -4,7 +4,6 @@ import { LayoutDashboard, Map } from "lucide-react";
 import { IconBadge } from "@/components/icon-badge";
 import { NameForm } from "./_components/title-form";
 import { EmailForm } from "./_components/email-form";
-import { GooglemapPlaces } from "./_components/googlemap-places";
 
 const DonorIdPage = async ({ params }: { params: { donorId: string } }) => {
   const { userId } = auth();
