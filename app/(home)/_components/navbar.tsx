@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
 const NavBar = () => {
-  const [state, setState] = useState(false);
-  const [prevScrollpos, setPrevScrollpos] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [top, setTop] = useState(0);
   const router = useRouter();
   const { userId } = useAuth();
@@ -17,19 +17,15 @@ const NavBar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      if (prevScrollpos > currentScrollPos) {
-        setTop(0);
-      } else {
-        setTop(-110);
-      }
-      setPrevScrollpos(currentScrollPos);
+      setTop(prevScrollPos > currentScrollPos ? 0 : -110);
+      setPrevScrollPos(currentScrollPos);
     };
-    window.addEventListener("scroll", handleScroll);
 
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [prevScrollpos]);
+  }, [prevScrollPos]);
 
   const menus = [
     { title: "Home", path: "/" },
@@ -42,53 +38,47 @@ const NavBar = () => {
 
   return (
     <nav
-      className={
-        !state
-          ? `sticky top-${top} bg-white z-10 w-full border-b md:border-0`
-          : "fixed bg-white z-10 w-full border-b md:border-0"
-      }
+      className={`sticky top-${top} bg-white shadow transition-shadow duration-300 z-10 w-full border-b md:border-0`}
       style={{ transition: "top ease-in-out 0.3s" }}
     >
-      <div className="items-center px-4 max-w-screen-2xl mx-auto md:flex md:px-8">
-        <div className="flex items-center justify-between py-3 md:py-5 md:block">
-          <Link href="/">
-            <Image
-              src="/assets/logo.png"
-              width={70}
-              height={70}
-              alt="Branding logo"
-            />
-          </Link>
-          <div className="md:hidden">
-            <button
-              className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"
-              onClick={() => setState(!state)}
-            >
-              {!state ? <Menu /> : <X />}
-            </button>
-          </div>
-        </div>
+      <div className="flex items-center justify-between px-4 py-3 max-w-screen-2xl mx-auto md:flex md:px-8 md:py-5">
+        <Link href="/" aria-label="Brand Logo">
+          <Image
+            src="/assets/logo.png"
+            width={70}
+            height={70}
+            alt="Branding logo"
+            priority
+          />
+        </Link>
+        <button
+          className="md:hidden text-gray-700 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <X /> : <Menu />}
+        </button>
+
         <div
-          className={`flex-1 justify-self-center pb-5 mt-8 md:block md:pb-0 md:mt-0 text-center ${
-            state ? "block" : "hidden"
+          className={`flex-1 text-center space-y-5 mt-8 md:space-y-0 md:flex md:items-center md:justify-center md:mt-0 ${
+            isOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="justify-center items-center space-y-5 md:flex md:space-x-10 md:space-y-0">
+          <ul className="flex flex-col items-center space-y-5 md:flex-row md:space-x-10 md:space-y-0">
             {menus.map((item, idx) => (
               <li
                 key={idx}
-                className="font-medium text-black hover:text-indigo-600"
+                className="font-medium text-black hover:text-indigo-600 transition-colors duration-200"
               >
-                <Link href={item.path}>{item.title}</Link>
+                <Link href={item.path} aria-label={item.title}>
+                  {item.title}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
-        <div
-          className={`${
-            state ? "block text-center" : "hidden"
-          } md:flex gap-3 items-center`}
-        >
+
+        <div className="md:flex md:items-center md:gap-3 md:ml-auto">
           {!userId ? (
             <Button
               variant="success"
