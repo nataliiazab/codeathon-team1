@@ -5,21 +5,20 @@ export default authMiddleware({
     "/api/uploadthing",
     "/",
     "/register",
-    "/campaigns", 
+    "/campaigns",
     "/api/donor-registration",
     "/api/campaigns",
   ],
-  
+
   ignoredRoutes: [
-    "/api/campaigns/(.*)", 
+    "/api/campaigns/(.*)",
   ],
 });
 
-
 export const config = {
-
+  // Matcher for routes that need authentication
   matcher: [
-    "/((?!.+\\.[\\w]+$|_next).*)",
+    "/((?!.+\\.[\\w]+$|_next).*)", 
     "/api/:path*", 
   ],
 };
