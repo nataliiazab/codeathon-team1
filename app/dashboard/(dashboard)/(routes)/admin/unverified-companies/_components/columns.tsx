@@ -1,9 +1,17 @@
 "use client"; // This makes the component a Client Component
 
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
+interface CompanyRow {
+  id: string; 
+  companyName: string;
+  companyAddress: string;
+  contactPerson: string;
+  contactEmail: string;
+  status: string;
+}
 
 export const columns = [
   {
@@ -29,10 +37,10 @@ export const columns = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => {
+    cell: ({ row }: { row: { original: CompanyRow } }) => {
       const { id, status } = row.original;
       const [loading, setLoading] = useState(false);
-      const router = useRouter(); 
+      const router = useRouter();
 
       const handleVerify = async () => {
         setLoading(true);
@@ -40,8 +48,8 @@ export const columns = [
           await fetch(`/api/verify-company/${id}`, {
             method: "POST",
           });
-    
-          router.refresh(); 
+
+          router.refresh();
         } catch (error) {
           console.error("Error verifying company:", error);
         } finally {
