@@ -65,8 +65,6 @@ const CampaignCard = ({
   );
 };
 
-
-
 const Campaigns = ({ items }: CampaignsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("");
@@ -90,7 +88,13 @@ const Campaigns = ({ items }: CampaignsListProps) => {
     };
 
     fetchCampaigns();
-  }, []);
+
+    return () => {
+      setData(null);
+      setCurrentPage(1);
+      setIsLoading(true); 
+    };
+  }, []); 
 
   const uniqueCategories = Array.from(
     new Set(data?.map((campaign) => campaign.category.name))
