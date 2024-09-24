@@ -41,12 +41,7 @@ const adminRoutes = [
     icon: ShieldQuestion,
     label: "UnVerified Companies",
     href: "/dashboard/admin/unverified-companies",
-  },
-  {
-    icon: UserCog,
-    label: "Manage Roles",
-    href: "/dashboard/admin/roles",
-  },
+  }
 ];
 
 export const SidebarRoutes = () => {
