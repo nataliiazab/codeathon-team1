@@ -1,10 +1,10 @@
 "use client"; // This makes the component a Client Component
 
-import { Button } from "@/components/ui/button"; // Assuming you have a Button component
+import { Button } from "@/components/ui/button"; 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Correct import for Next.js 13+
+import { useRouter } from "next/navigation"; 
 
-// Define columns with a button for pending status
+
 export const columns = [
   {
     accessorKey: "id",
@@ -32,7 +32,7 @@ export const columns = [
     cell: ({ row }) => {
       const { id, status } = row.original;
       const [loading, setLoading] = useState(false);
-      const router = useRouter(); // This is now the correct hook for routing/navigation in Next.js 13+
+      const router = useRouter(); 
 
       const handleVerify = async () => {
         setLoading(true);
@@ -40,8 +40,8 @@ export const columns = [
           await fetch(`/api/verify-company/${id}`, {
             method: "POST",
           });
-          // Reload the page or refetch the data
-          router.refresh(); // Use router.refresh() to reload the data in Next.js 13+
+    
+          router.refresh(); 
         } catch (error) {
           console.error("Error verifying company:", error);
         } finally {

@@ -1,3 +1,5 @@
+"use client";
+
 import * as z from "zod";
 import { useAuth, useOrganization } from "@clerk/nextjs";
 import { OrganizationCustomRoleKey } from "@clerk/types";
@@ -171,7 +173,6 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
     </div>
   );
 };
-
 
 const Page = () => {
   return <InviteMember />;
