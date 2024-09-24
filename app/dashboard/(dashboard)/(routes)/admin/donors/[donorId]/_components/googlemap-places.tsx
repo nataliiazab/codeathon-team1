@@ -1,18 +1,45 @@
-"use client"
+"use client";
+
 import { useEffect, useState, useRef } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 
+type AddressComponent = {
+  long_name: string;
+  short_name: string;
+  types: string[];
+};
+
+type Place = {
+  address_components: AddressComponent[];
+  geometry: {
+    location: {
+      lat: () => number;
+      lng: () => number;
+    };
+  };
+};
+
+type InputState = {
+  streetAddress?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
+  latitude?: number;
+  longitude?: number;
+};
+
 export const GooglemapPlaces = () => {
-  const libraries = ["places"];
+  const libraries: "places"[] = ["places"];
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
     libraries,
   });
 
-  const [input, setInput] = useState({});
-  const inputRef = useRef(null);
+  const [input, setInput] = useState<InputState>({});
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!isLoaded || loadError) return;
@@ -22,20 +49,27 @@ export const GooglemapPlaces = () => {
       fields: ["address_components", "geometry"],
     };
 
-    const autocomplete = new google.maps.places.Autocomplete(inputRef.current, options);
-    autocomplete.addListener("place_changed", () => handlePlaceChanged(autocomplete));
-
-    // return () => autocomplete.removeListener("place_changed", handlePlaceChanged);
+    if (inputRef.current) {
+      const autocomplete = new google.maps.places.Autocomplete(
+        inputRef.current,
+        options
+      );
+      autocomplete.addListener("place_changed", () =>
+        handlePlaceChanged(autocomplete)
+      );
+    }
   }, [isLoaded, loadError]);
 
-  const handleChange = (event) => {
-    const {name, value} = event.target;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setInput((values) => ({ ...values, [name]: value }));
   };
 
-  const handlePlaceChanged = async(address) => {
+  const handlePlaceChanged = async (
+    autocomplete: google.maps.places.Autocomplete
+  ) => {
     if (!isLoaded) return;
-    const place = address.getPlace()
+    const place = autocomplete.getPlace() as Place;
 
     if (!place || !place.geometry) {
       setInput({});
@@ -44,11 +78,10 @@ export const GooglemapPlaces = () => {
     formData(place);
   };
 
-  const formData = (data) => {
-    console.log(data)
-    const addressComponents = data?.address_components;
+  const formData = (data: Place) => {
+    const addressComponents = data?.address_components || [];
 
-    const componentMap = {
+    const componentMap: Record<string, string> = {
       subPremise: "",
       premise: "",
       street_number: "",
@@ -59,31 +92,30 @@ export const GooglemapPlaces = () => {
       administrative_area_level_1: "",
     };
 
-    for (const component of addressComponents) {
+    addressComponents.forEach((component) => {
       const componentType = component.types[0];
       if (componentMap.hasOwnProperty(componentType)) {
         componentMap[componentType] = component.long_name;
       }
-    }
+    });
 
     const formattedAddress =
       `${componentMap.subPremise} ${componentMap.premise} ${componentMap.street_number} ${componentMap.route}`.trim();
-    const latitude = data?.geometry?.location?.lat();
-    const longitude = data?.geometry?.location?.lng();
+    const latitude = data.geometry.location.lat();
+    const longitude = data.geometry.location.lng();
 
-    setInput((values) => ({
-      ...values,
+    setInput({
       streetAddress: formattedAddress,
       country: componentMap.country,
       zipCode: componentMap.postal_code,
       city: componentMap.administrative_area_level_2,
       state: componentMap.administrative_area_level_1,
-      latitude: latitude,
-      longitude: longitude,
-    }));
+      latitude,
+      longitude,
+    });
   };
 
-  return(
+  return (
     isLoaded && (
       <div className="p-4 grid grid-cols-2 gap-5">
         <div className="flex flex-col w-full">
@@ -114,7 +146,6 @@ export const GooglemapPlaces = () => {
           />
         </div>
 
-
         <div className="flex flex-col w-full">
           <label className="text-md mb-2">State</label>
           <input
@@ -137,7 +168,7 @@ export const GooglemapPlaces = () => {
             name="country"
             value={input.country || ""}
             onChange={handleChange}
-           className="text-sm mt-2"
+            className="text-sm mt-2"
             placeholder="Country"
             disabled
             aria-disabled
@@ -159,5 +190,5 @@ export const GooglemapPlaces = () => {
         </div>
       </div>
     )
-    )
-}
+  );
+};
