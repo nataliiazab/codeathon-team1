@@ -44,7 +44,7 @@ export default function DonateAsCompany() {
             id="campaignName"
             value={campaignName}
             readOnly
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
             aria-live="polite"
           />
         </div>
@@ -62,6 +62,7 @@ export default function DonateAsCompany() {
               if (value !== "Other") setNewCompanyName("");
             }}
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            required
           >
             <option value="" disabled>
               Select a company
@@ -86,6 +87,7 @@ export default function DonateAsCompany() {
                 value={newCompanyName}
                 onChange={(e) => setNewCompanyName(e.target.value)}
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                required={companyName === "Other"}
               />
               {newCompanyName.trim() === "" && (
                 <p className="text-red-600 mt-1">
@@ -107,6 +109,7 @@ export default function DonateAsCompany() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            placeholder="you@example.com"
           />
         </div>
 
@@ -119,6 +122,7 @@ export default function DonateAsCompany() {
             id="name"
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            placeholder="Your Name"
           />
         </div>
 
@@ -128,7 +132,7 @@ export default function DonateAsCompany() {
               type="checkbox"
               checked={isRecurring}
               onChange={() => setIsRecurring((prev) => !prev)}
-              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
+              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
             />
             <span className="ml-2 text-gray-700">
               Make this a recurring donation
@@ -143,7 +147,7 @@ export default function DonateAsCompany() {
               checked={agreed}
               onChange={() => setAgreed((prev) => !prev)}
               required
-              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
+              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
             />
             <span className="ml-2 text-gray-700">
               I agree to the{" "}
@@ -156,7 +160,7 @@ export default function DonateAsCompany() {
 
         <button
           type="submit"
-          className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-full rounded-full flex items-center justify-center"
+          className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-full rounded-full flex items-center justify-center focus:outline-none focus:ring focus:ring-blue-300 transition duration-150"
         >
           Donate Now <FaPaypal className="ml-2 text-xl" />
         </button>

@@ -5,13 +5,21 @@ export default authMiddleware({
     "/api/uploadthing",
     "/",
     "/register",
-    /^\/campaigns\/.*/,
+    "/campaigns", 
     "/api/donor-registration",
     "/api/campaigns",
   ],
-  ignoredRoutes: ["/api/campaigns/(.*)"],
+  
+  ignoredRoutes: [
+    "/api/campaigns/(.*)", 
+  ],
 });
 
+
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+
+  matcher: [
+    "/((?!.+\\.[\\w]+$|_next).*)",
+    "/api/:path*", 
+  ],
 };

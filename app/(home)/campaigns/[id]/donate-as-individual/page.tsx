@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FaPaypal } from "react-icons/fa";
 
 export default function DonateAsIndividual() {
@@ -18,7 +18,7 @@ export default function DonateAsIndividual() {
       if (agreed) {
         window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
           isRecurring ? "RECURRING" : "ONCE"
-        }`; 
+        }`;
       } else {
         alert("You must agree to the disclaimer.");
       }
@@ -31,7 +31,7 @@ export default function DonateAsIndividual() {
       <h1 className="text-2xl font-semibold text-gray-900 mb-4">
         Donate as Individual
       </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="campaignName" className="block text-gray-700">
             Campaign Name
@@ -41,7 +41,7 @@ export default function DonateAsIndividual() {
             id="campaignName"
             value={campaignName}
             readOnly
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100"
             aria-live="polite"
           />
         </div>
@@ -57,8 +57,13 @@ export default function DonateAsIndividual() {
               checked={donorType === "anonymous"}
               onChange={() => setDonorType("anonymous")}
               className="form-radio h-5 w-5 text-blue-600 border-gray-300 rounded"
+              aria-labelledby="anonymousLabel"
             />
-            <label htmlFor="anonymous" className="ml-2 text-gray-700">
+            <label
+              id="anonymousLabel"
+              htmlFor="anonymous"
+              className="ml-2 text-gray-700"
+            >
               Donate Anonymously
             </label>
           </div>
@@ -71,8 +76,13 @@ export default function DonateAsIndividual() {
               checked={donorType === "provideDetails"}
               onChange={() => setDonorType("provideDetails")}
               className="form-radio h-5 w-5 text-blue-600 border-gray-300 rounded"
+              aria-labelledby="provideDetailsLabel"
             />
-            <label htmlFor="provideDetails" className="ml-2 text-gray-700">
+            <label
+              id="provideDetailsLabel"
+              htmlFor="provideDetails"
+              className="ml-2 text-gray-700"
+            >
               Provide Name and Email
             </label>
           </div>
@@ -82,7 +92,7 @@ export default function DonateAsIndividual() {
           <>
             <div>
               <label htmlFor="email" className="block text-gray-700">
-                Email Address
+                Email Address <span className="text-red-600">*</span>
               </label>
               <input
                 type="email"
@@ -90,13 +100,13 @@ export default function DonateAsIndividual() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
                 placeholder="Enter your email address"
               />
             </div>
             <div>
               <label htmlFor="name" className="block text-gray-700">
-                Full Name
+                Full Name <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
@@ -104,48 +114,46 @@ export default function DonateAsIndividual() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
                 placeholder="Enter your full name"
               />
             </div>
           </>
         )}
 
-        <div>
-          <label className="inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={isRecurring}
-              onChange={() => setIsRecurring((prev) => !prev)}
-              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
-            />
-            <span className="ml-2 text-gray-700">
-              Make this a recurring donation
-            </span>
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            checked={isRecurring}
+            onChange={() => setIsRecurring((prev) => !prev)}
+            className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
+            id="recurringDonation"
+          />
+          <label htmlFor="recurringDonation" className="ml-2 text-gray-700">
+            Make this a recurring donation
           </label>
         </div>
 
-        <div>
-          <label className="inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={() => setAgreed((prev) => !prev)}
-              required
-              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
-            />
-            <span className="ml-2 text-gray-700">
-              I agree to the{" "}
-              <a href="/disclaimer" className="text-blue-500 hover:underline">
-                disclaimer
-              </a>
-            </span>
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            checked={agreed}
+            onChange={() => setAgreed((prev) => !prev)}
+            required
+            className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
+            id="agreement"
+          />
+          <label htmlFor="agreement" className="ml-2 text-gray-700">
+            I agree to the{" "}
+            <a href="/disclaimer" className="text-blue-500 hover:underline">
+              disclaimer
+            </a>
           </label>
         </div>
 
         <button
           type="submit"
-          className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-full rounded-full flex items-center justify-center"
+          className="bg-[#059669] hover:bg-[#037f57] text-white text-sm py-2 px-5 w-full rounded-full flex items-center justify-center transition duration-200 ease-in-out"
         >
           Donate Now <FaPaypal className="ml-2 text-xl" />
         </button>
