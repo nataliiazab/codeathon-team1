@@ -11,7 +11,6 @@ type CampaignWithProgressWithCategory = Campaign & {
   campaigns: { id: string }[];
 };
 
-// Define a type for the API response
 interface CampaignApiResponse {
   id: string;
   title: string;
