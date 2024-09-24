@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { columns } from './Table/columns';
 import { getReportsData } from '../../api/reports/reports';
 import { fetchPayPalData } from '../../api/paypal/paypal';
-// import { BarChartComponent } from './Charts/BarChart';
-// import { LineChartComponent } from './Charts/LineChart';
 import AgChartTable from './Table/AgChartTable';
 
 const Dashboard: React.FC = () => {
@@ -19,7 +16,6 @@ const Dashboard: React.FC = () => {
     const payPalData = await fetchPayPalData();
     setPayPalData(payPalData);
 
-    // Prepare data for charts
     const chartData = data.items.map((item: any) => ({
       month: item.date.slice(0, 7),
       donations: item.type === 'Donation' ? item.amount : 0,

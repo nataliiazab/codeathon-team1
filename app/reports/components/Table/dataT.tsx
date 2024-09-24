@@ -67,7 +67,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      {/* Filters */}
 
       <div className='flex items-center justify-between'>
         <div className='flex items-center py-4'>
@@ -81,7 +80,6 @@ export function DataTable<TData, TValue>({
           />
         </div>
 
-        {/* Column visibility */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='outline' className='ml-auto'>
@@ -109,7 +107,6 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
       </div>
 
-      {/* Table */}
       <div className='rounded-md border'>
         <Table>
           <TableHeader>
@@ -159,7 +156,6 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      {/* Pagination */}
       <div className='flex items-center justify-end space-x-2 py-4'>
         <Button
           variant='outline'
