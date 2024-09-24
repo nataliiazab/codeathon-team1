@@ -38,7 +38,7 @@ const validRoles = [
 
 interface InviteMemberProps {
   email?: string;
-  role?: OrganizationCustomRoleKey;
+  role?: OrganizationCustomRoleKey | undefined; // Allow undefined here
 }
 
 const formSchema = z.object({
@@ -74,7 +74,7 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: email || "",
-      role: role || "",
+      role: role || undefined, // Set to undefined if falsy
     },
   });
 
