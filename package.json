@@ -4,11 +4,12 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && npx prisma generate",
+     "dev": "next dev",
+    "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "seed": "node scripts/seed.ts"
+    "seed": "node scripts/seed.ts",
+    "postinstall": "prisma generate" 
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
