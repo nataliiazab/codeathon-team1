@@ -5,6 +5,15 @@ import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { db } from "@/lib/db";
 
+interface CompanyRow {
+  id: string; 
+  companyName: string;
+  companyAddress: string;
+  contactPerson: string;
+  contactEmail: string;
+  status: string;
+}
+
 const CompaniesPage = async () => {
   const { userId } = auth();
 
@@ -19,9 +28,19 @@ const CompaniesPage = async () => {
     },
   });
 
+
+  const formattedCompanies: CompanyRow[] = companies.map((company) => ({
+    id: String(company.id),
+    companyName: company.companyName,
+    companyAddress: company.companyAddress,
+    contactPerson: company.contactPerson,
+    contactEmail: company.contactEmail,
+    status: company.status,
+  }));
+
   return (
     <div className="p-6">
-      <DataTable columns={columns} data={companies} />
+      <DataTable columns={columns} data={formattedCompanies} />
     </div>
   );
 };
