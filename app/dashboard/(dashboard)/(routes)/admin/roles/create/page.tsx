@@ -1,5 +1,3 @@
-"use client";
-
 import * as z from "zod";
 import { useAuth, useOrganization } from "@clerk/nextjs";
 import { OrganizationCustomRoleKey } from "@clerk/types";
@@ -27,9 +25,18 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 
+const validRoles = [
+  "org:super_admin",
+  "org:admin",
+  "org:member",
+  "admin",
+  "basic_member",
+  "guest_member",
+] as const;
+
 interface InviteMemberProps {
-  email?: string; 
-  role?: OrganizationCustomRoleKey; 
+  email?: string;
+  role?: OrganizationCustomRoleKey;
 }
 
 const formSchema = z.object({
@@ -38,7 +45,9 @@ const formSchema = z.object({
     .min(1, { message: "Email is required" })
     .email("This is not a valid email.")
     .trim(),
-  role: z.string({ required_error: "Please select a role to display." }),
+  role: z.enum(validRoles, {
+    required_error: "Please select a role to display.",
+  }),
 });
 
 const InviteMember = ({ email, role }: InviteMemberProps) => {
@@ -79,7 +88,7 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
         emailAddress: values.email,
         role: values.role,
       });
-      toast.success("Please check your email to accept invitation");
+      toast.success("Please check your email to accept the invitation");
       router.push("/dashboard/admin/invitations");
     } catch (err: any) {
       if (isClerkAPIResponseError(err)) toast.error(err.errors[0].message);
@@ -163,7 +172,7 @@ const InviteMember = ({ email, role }: InviteMemberProps) => {
   );
 };
 
-// Export the InviteMember component as default
+
 const Page = () => {
   return <InviteMember />;
 };

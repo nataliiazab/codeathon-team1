@@ -1,17 +1,15 @@
 "use client"
 
-import { ArrowUpDown, MoreHorizontal, Trash } from "lucide-react";
+import { ArrowUpDown} from "lucide-react";
 
-import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Actions } from "./actions";
-import { ConfirmModal } from "@/components/modals/confirm-modal";
-// import { Actions } from "./[roleId]/_components/actions";
+
 
 export const columns: ColumnDef<any>[] = [
   {
