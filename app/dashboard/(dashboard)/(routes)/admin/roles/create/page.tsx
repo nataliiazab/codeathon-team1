@@ -1,4 +1,3 @@
-"use client";
 
 import * as z from "zod";
 import { useAuth, useOrganization } from "@clerk/nextjs";
