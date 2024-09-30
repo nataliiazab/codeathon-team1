@@ -9,25 +9,31 @@ export default function DonateAsCompany() {
   const [email, setEmail] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [newCompanyName, setNewCompanyName] = useState<string>("");
-  const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const router = useRouter();
   const campaignName = searchParams.get("campaignName") || "";
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      // Validate that new company name is provided if "Other" is selected
+      if (companyName === "Other" && newCompanyName.trim() === "") {
+        alert("Please enter a new company name.");
+        return;
+      }
+
       if (agreed) {
-        window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
-          isRecurring ? "RECURRING" : "ONCE"
-        }`;
+
+        window.location.href = `https://sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-iqpee31411926@business.example.com&item_name=${encodeURIComponent(
+          campaignName
+        )}`;
       } else {
         alert("You must agree to the disclaimer.");
       }
     },
-    [agreed, isRecurring]
+    [agreed, campaignName, companyName, newCompanyName]
   );
 
   const toggleDisclaimer = () => setShowDisclaimer((prev) => !prev);
@@ -133,26 +139,9 @@ export default function DonateAsCompany() {
           <label className="inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
-              checked={isRecurring}
-              onChange={() => setIsRecurring((prev) => !prev)}
-              className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
-            />
-            <span className="ml-2 text-gray-700">
-              Make this a recurring donation
-            </span>
-          </label>
-        </div>
-
-        <div>
-          <label className="inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
               checked={agreed}
               onChange={() => {
-                toggleDisclaimer();
-                if (!agreed) {
-                  setAgreed(true);
-                }
+                setAgreed((prev) => !prev);
               }}
               required
               className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"

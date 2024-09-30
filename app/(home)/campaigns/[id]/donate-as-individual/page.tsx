@@ -7,7 +7,6 @@ export default function DonateAsIndividual() {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [donorType, setDonorType] = useState<string>("anonymous");
-  const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
   const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
 
@@ -18,14 +17,13 @@ export default function DonateAsIndividual() {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (agreed) {
-        window.location.href = `https://www.paypal.com/donate?business=your-paypal-business-email&amount=${
-          isRecurring ? "RECURRING" : "ONCE"
-        }`;
+        window.location.href = `https://sandbox.paypal.com/cgi-bin/webscr?cmd=_donations&business=sb-iqpee31411926@business.example.com&
+      }`;
       } else {
         alert("You must agree to the disclaimer.");
       }
     },
-    [agreed, isRecurring]
+    [agreed]
   );
 
   const toggleDisclaimer = () => setShowDisclaimer((prev) => !prev);
@@ -124,19 +122,6 @@ export default function DonateAsIndividual() {
             </div>
           </>
         )}
-
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            checked={isRecurring}
-            onChange={() => setIsRecurring((prev) => !prev)}
-            className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded"
-            id="recurringDonation"
-          />
-          <label htmlFor="recurringDonation" className="ml-2 text-gray-700">
-            Make this a recurring donation
-          </label>
-        </div>
 
         <div className="flex items-center">
           <input
