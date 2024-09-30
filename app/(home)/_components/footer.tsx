@@ -30,7 +30,6 @@ const Footer = () => {
   return (
     <footer className="bg-[#059669] text-white py-12">
       <div className="max-w-screen-xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Logo or About Section */}
         <div className="md:col-span-1">
           <h2 className="text-2xl font-bold mb-4">The BIG Alliance</h2>
           <p className="text-gray-200 leading-relaxed mb-4">
@@ -53,7 +52,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Find Us Section */}
         <div className="md:col-span-1">
           <h3 className="text-xl font-semibold mb-4">Find Us</h3>
           <address className="not-italic text-gray-300">
@@ -63,7 +61,6 @@ const Footer = () => {
           </address>
         </div>
 
-        {/* Navigation Links */}
         <div className="md:col-span-1">
           <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
           <nav className="flex flex-col space-y-2">
@@ -79,7 +76,6 @@ const Footer = () => {
           </nav>
         </div>
 
-        {/* Important Info Section */}
         <div className="md:col-span-1">
           <h3 className="text-xl font-semibold mb-4">Important Info</h3>
           <p className="text-gray-300 leading-relaxed">
@@ -94,7 +90,7 @@ const Footer = () => {
         <div className="max-w-screen-xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
           {/* Copyright and Credits */}
           <p className="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} Nataliia Zablotska
+            &copy; {new Date().getFullYear()} Team 1
           </p>
           <p className="text-gray-400 text-sm text-center md:text-right">
             Developed for 'Code for a Cause Hackathon'
