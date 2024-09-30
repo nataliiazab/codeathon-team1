@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { Linkedin, Twitter, Instagram } from "lucide-react";
 
@@ -7,14 +8,17 @@ const Footer = () => {
     {
       icon: <Linkedin className="text-white" />,
       link: "https://www.linkedin.com/company/the-big-alliance/",
+      label: "LinkedIn",
     },
     {
       icon: <Twitter className="text-white" />,
       link: "https://x.com/TheBIGAlliance",
+      label: "Twitter",
     },
     {
       icon: <Instagram className="text-white" />,
       link: "https://www.instagram.com/thebigalliance/",
+      label: "Instagram",
     },
   ];
 
@@ -24,36 +28,76 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#059669] text-white py-10">
-      <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <div className="flex flex-col items-center md:items-start mb-6 md:mb-0"></div>
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 mb-6 md:mb-0">
-          {navigationLinks.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.path}
-              className="font-medium hover:text-gray-400"
-            >
-              {item.title}
-            </Link>
-          ))}
+    <footer className="bg-[#059669] text-white py-12">
+      <div className="max-w-screen-xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Logo or About Section */}
+        <div className="md:col-span-1">
+          <h2 className="text-2xl font-bold mb-4">The BIG Alliance</h2>
+          <p className="text-gray-200 leading-relaxed mb-4">
+            Empowering communities through innovation and support. Join us to
+            make a real impact.
+          </p>
+          <div className="flex space-x-4">
+            {socialLinks.map((social, idx) => (
+              <a
+                key={idx}
+                href={social.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="text-gray-300 hover:text-white transition-colors duration-300"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
         </div>
-        <div className="flex space-x-4 mb-6 md:mb-0">
-          {socialLinks.map((social, idx) => (
-            <a
-              key={idx}
-              href={social.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-300"
-            >
-              {social.icon}
-            </a>
-          ))}
+
+        {/* Find Us Section */}
+        <div className="md:col-span-1">
+          <h3 className="text-xl font-semibold mb-4">Find Us</h3>
+          <address className="not-italic text-gray-300">
+            13 Elliott's Place, <br />
+            Islington, London <br />
+            N1 8HX
+          </address>
         </div>
-        <div className="text-center md:text-right">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} The BIG Alliance - Developed for 'Code for a Cause Hackathon'
+
+        {/* Navigation Links */}
+        <div className="md:col-span-1">
+          <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+          <nav className="flex flex-col space-y-2">
+            {navigationLinks.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.path}
+                className="text-gray-300 hover:text-white transition-colors duration-300 font-medium"
+              >
+                {item.title}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/* Important Info Section */}
+        <div className="md:col-span-1">
+          <h3 className="text-xl font-semibold mb-4">Important Info</h3>
+          <p className="text-gray-300 leading-relaxed">
+            BIG Alliance is a project delivered by East London Business Alliance
+            (registered charity number 1122173), and founded and funded by
+            Islington Giving and Macquarie Group.
+          </p>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-600 mt-10 pt-6">
+        <div className="max-w-screen-xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+          {/* Copyright and Credits */}
+          <p className="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0">
+            &copy; {new Date().getFullYear()} Nataliia Zablotska
+          </p>
+          <p className="text-gray-400 text-sm text-center md:text-right">
+            Developed for 'Code for a Cause Hackathon'
           </p>
         </div>
       </div>
