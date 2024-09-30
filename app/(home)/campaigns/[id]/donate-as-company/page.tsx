@@ -11,6 +11,7 @@ export default function DonateAsCompany() {
   const [newCompanyName, setNewCompanyName] = useState<string>("");
   const [isRecurring, setIsRecurring] = useState<boolean>(false);
   const [agreed, setAgreed] = useState<boolean>(false);
+  const [showDisclaimer, setShowDisclaimer] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const campaignName = searchParams.get("campaignName") || "";
@@ -28,6 +29,8 @@ export default function DonateAsCompany() {
     },
     [agreed, isRecurring]
   );
+
+  const toggleDisclaimer = () => setShowDisclaimer((prev) => !prev);
 
   return (
     <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
@@ -145,15 +148,24 @@ export default function DonateAsCompany() {
             <input
               type="checkbox"
               checked={agreed}
-              onChange={() => setAgreed((prev) => !prev)}
+              onChange={() => {
+                toggleDisclaimer();
+                if (!agreed) {
+                  setAgreed(true);
+                }
+              }}
               required
               className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
             />
             <span className="ml-2 text-gray-700">
               I agree to the{" "}
-              <a href="/disclaimer" className="text-blue-500 hover:underline">
+              <button
+                type="button"
+                onClick={toggleDisclaimer}
+                className="text-blue-500 hover:underline"
+              >
                 disclaimer
-              </a>
+              </button>
             </span>
           </label>
         </div>
@@ -165,6 +177,25 @@ export default function DonateAsCompany() {
           Donate Now <FaPaypal className="ml-2 text-xl" />
         </button>
       </form>
+
+      {showDisclaimer && (
+        <div className="mt-4 p-4 bg-gray-100 border rounded-md">
+          <h2 className="font-semibold">Disclaimer</h2>
+          <p className="mt-2 text-gray-600">
+            Your donations support the specified campaign and help make a
+            difference. By agreeing, you consent to share your data with the
+            campaign organizers for processing your donation and communicating
+            future updates. Please ensure that you agree with these terms before
+            proceeding.
+          </p>
+          <button
+            onClick={toggleDisclaimer}
+            className="mt-2 text-blue-500 hover:underline"
+          >
+            Close
+          </button>
+        </div>
+      )}
     </div>
   );
 }
