@@ -10,15 +10,9 @@ export default authMiddleware({
     "/api/campaigns",
   ],
 
-  ignoredRoutes: [
-    "/api/campaigns/(.*)",
-  ],
+  ignoredRoutes: ["/api/campaigns/(.*)"],
 });
 
 export const config = {
-  // Matcher for routes that need authentication
-  matcher: [
-    "/((?!.+\\.[\\w]+$|_next).*)", 
-    "/api/:path*", 
-  ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/api/:path*"],
 };
