@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState, useCallback, useEffect } from "react";
 import parse from "html-react-parser";
+import Spinner from "../../_components/spinner";
 
 import {
   FaFacebookF,
@@ -24,12 +25,6 @@ interface Campaign {
   imageUrl: string;
   category: Category;
 }
-
-const Spinner: React.FC = () => (
-  <div className="flex justify-center items-center">
-    <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-[#37AB87] border-solid"></div>
-  </div>
-);
 
 const CampaignDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -89,9 +84,6 @@ const CampaignDetails: React.FC = () => {
   if (loading) {
     return (
       <div className="m-6 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg border border-slate-100 text-center">
-        <h1 className="text-2xl font-semibold text-gray-800">
-          Loading campaign details...
-        </h1>
         <Spinner />
       </div>
     );
