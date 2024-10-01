@@ -8,8 +8,10 @@ export default authMiddleware({
     "/campaigns",
     "/api/donor-registration",
     "/api/campaigns",
-    "/api/campaigns/:id", 
+    "/api/campaigns/:id",
     "/campaigns/:id",
+    "/campaigns/:id/donate-as-individual",
+    "/campaigns/:id/donate-as-company",
   ],
 });
 
