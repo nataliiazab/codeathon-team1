@@ -8,9 +8,9 @@ export default authMiddleware({
     "/campaigns",
     "/api/donor-registration",
     "/api/campaigns",
+    "/api/campaigns/:id", 
+    "/campaigns/:id",
   ],
-
-  ignoredRoutes: ["/api/campaigns/(.*)"],
 });
 
 export const config = {
